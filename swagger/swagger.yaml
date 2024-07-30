@@ -1,0 +1,94 @@
+openapi: 3.1.0
+info:
+  title: Auth0 API Server
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      summary: Listar todos os usuários
+      responses:
+        '200':
+          description: Lista de usuários
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    email:
+                      type: string
+                    name:
+                      type: string
+    post:
+      summary: Criar novo usuário
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                name:
+                  type: string
+              required:
+                - email
+                - name
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+
+  /favorites:
+    get:
+      summary: Listar itens favoritos
+      responses:
+        '200':
+          description: Lista de itens favoritos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    item_id:
+                      type: string
+                    user_id:
+                      type: string
+    post:
+      summary: Adicionar item aos favoritos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_id:
+                  type: string
+                user_id:
+                  type: string
+              required:
+                - item_id
+                - user_id
+      responses:
+        '201':
+          description: Item adicionado aos favoritos
+    delete:
+      summary: Remover item dos favoritos
+      parameters:
+        - name: item_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: user_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Item removido com sucesso
